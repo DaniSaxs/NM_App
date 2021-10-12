@@ -65,7 +65,7 @@ function createAMatrix(){
 
         for (let j = 1; j <= cant; j++) {
             document.querySelector(`#row${i}`).innerHTML += `
-                <input type="number" id="a${i}${j}" class="form-control mx-2 inputsMatrix" value="${A[i - 1][j - 1]}">
+                <input type="number" id="a${i}${j}" class="form-control mx-2 inputsMatrix" placeholder="0" value="${A[i - 1][j - 1]}">
             `;
         }
 
@@ -84,7 +84,7 @@ function createAMatrix(){
         }
 
         bVector.innerHTML += `
-            <input type="number" id="b${i}" class="form-control" value="${b[i - 1]}">
+            <input type="number" id="b${i}" class="form-control inputsMatrix" placeholder="0" value="${b[i - 1]}">
         `;
 
     }
@@ -106,6 +106,30 @@ $('#cantMA').keyup(() => {
     $('#errorMsg').remove();
 });
 
+$('#randomButton').click(() => {
+    for (let i = 1; i <= cant; i++) {
+        for (let j = 1; j <= cant; j++) {
+            $(`#a${i}${j}`).val(Math.round((Math.random() * (100 - 0) + 0)));
+        }
+        $(`#b${i}`).val(Math.round((Math.random() * (100 - 0) + 0)));
+    }
+    $("#matrixCont").remove();
+    $("#GaussCont").remove();
+    $("#JacobiCont").remove();
+    $('#errorMsg').remove();
+    inputsMatrixValidation();
+});
+
+$('#eraseMatrix').click(() => {
+    for (let i = 1; i <= cant; i++) {
+        for (let j = 1; j <= cant; j++) {
+            $(`#a${i}${j}`).val("");
+        }
+        $(`#b${i}`).val("");
+    }
+    inputsMatrixValidation();
+});
+
 $('#iter').keyup(() => {
     if($('#iter').val() === ""){
         iteraciones = 1;
@@ -122,9 +146,41 @@ $(`.inputsMatrix`).keyup(() => {
     $("#GaussCont").remove();
     $("#JacobiCont").remove();
     $('#errorMsg').remove();
+    inputsMatrixValidation();
 });
 
+function inputsMatrixValidation(){
+    for (let i = 1; i <= cant; i++) {
+        for (let j = 1; j <= cant; j++) {
+            if($(`#a${i}${j}`).val() != "" || $(`#b${i}`).val() != ""){
+                $(`#eraseMatrix`).removeClass("d-none");
+            }else{
+                $(`#eraseMatrix`).addClass("d-none");
+            }
+        }
+    }
+}
+
+inputsMatrixValidation();
+
 function getFromPython(){
+
+    for (let i = 1; i <= cant; i++) {
+        for (let j = 1; j <= cant; j++) {
+            if($(`#a${i}${j}`).val() === "" || $(`#b${i}`).val() === ""){
+                $("#Spinner").addClass("d-none");
+                $("#Spinner").removeClass("d-flex");
+                $("body").append(`
+                    <div id="errorMsg" class="w-100 mt-3 d-flex justify-content-center">
+                        <h3 class="text-danger display-6">Matriz Incompleta!</h3>
+                    </div>
+                `);
+                return false;
+            }else{
+                $('#errorMsg').remove();
+            }
+        }
+    }
 
     $("#Spinner").removeClass("d-none");
     $("#Spinner").addClass("d-flex");
@@ -151,7 +207,6 @@ function getFromPython(){
     method = parseInt($('#method').val());
 
     iteraciones = parseInt($('#iter').val());
-
 
     if(method === 0 || iteraciones <= 0){
         if($('#errorMsg').html() === undefined){
@@ -309,7 +364,7 @@ function getFromPython(){
                     var beforeE = parseFloat(Math.round(split[0] * 100000) / 100000);
                     realV = `${beforeE}e^{${split[1]}}`;
                 }else{
-                    realV = data[0][i][0];
+                    realV = Math.round(data[0][i][0] * 10000) / 10000;
                 }
 
                 realVM.push(realV);
@@ -724,17 +779,19 @@ function xAndconvergenceAnalysis(realV,data){
 
     RE.innerHTML += `\\end{array}$$`;
 
-    var eigenMax = 0;
+    var eigenMax = -999999999;
     var indexA = [];
     var index = 0;
 
     for (let i = 0; i < eigenV.length; i++) {
-        eigenMax = Math.max(parseFloat(eigenV[i]));
+        if(parseFloat(eigenV[i]) > eigenMax){
+            eigenMax = parseFloat(eigenV[i]);
+        }
         indexA.push(parseFloat(eigenV[i]));
     }
 
     index = indexA.indexOf(eigenMax);
-    
+
     var signRE = "";
     var RERes = "";
 
