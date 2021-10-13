@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="Description" content="Enter your description here"/>
-<!-- <link rel="stylesheet" href="./node_lib/bootswatch/dist/flatly/bootstrap.min.css">
-<link rel="stylesheet" href="./node_lib/font-awesome/css/font-awesome.css"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="./css/styles.css">
@@ -14,91 +12,62 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid justify-content-center">
-          <a class="navbar-brand" href="/data"><i class="fa fa-heart"></i> NuMe</a>
-        </div>
-    </nav>
-
-    <div class="position-relative">
-        <select id="method" class="form-select form-control position-absolute m-3" style="width: 20%; left: 0; top: 0;">
-            <option value="0">Método</option>
-            <option value="1">Jacobi</option>
-            <option value="2">Gauss-Seidel</option>
-          </select>
-          <div class="w-25 position-absolute d-flex justify-content-end m-3" style="right: 0; top: 0;">
-            <div class="w-50 d-flex flex-row justify-content-right align-items-center">
-                <p class="m-0 mx-3">Iteraciones:</p>
-                <input type="number" id="iter" class="form-control" placeholder="1" value="5">
-            </div>
-          </div>
-    </div>
-
-    <div class="w-100 d-flex justify-content-center mt-3">
-        <div class="row d-flex align-items-center">
-            <div class="col-md-6">
-                <h6 class="m-0">Digita el tamaño de la Matriz: </h6>
-            </div>
-            <div class="col-md-2">
-                <input type="number" id="cantMA" style="text-align: right;" class="form-control" placeholder="1" value="3">
-            </div>
-            <div class="col-md-2">
-                <p class="m-0"> x <span id="cantMATxt"></span></p>
-            </div>
-            <div class="col-md-2 d-flex flex-row">
-                <button id="randomButton" class="btn btn-info mx-2" title="Llenar de números aleatorios la matriz"><i class="fa fa-random"></i></button>
-                <button id="eraseMatrix" class="btn btn-danger d-none mx-2" title="Borrar los campos de la matriz"><i class="fa fa-eraser"></i></button>
-            </div>
+    <div class="position-absolute w-100" style="top: 3%; z-index: 1;">
+        <div class="w-100 d-flex justify-content-center align-items-center flex-column">
+            <h1 class="display-5 text-white" style="text-shadow: 0 0 10px black;"><i class="fa fa-subscript"></i> NuMe</h1>
+            <p class="m-0 text-white" style="text-shadow: 0 0 10px black;">Solución de Métodos Numéricos</p>
         </div>
     </div>
 
-    <form id="matrixForm">
-        <div class="container mt-3">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <p class="m-0">A=</p>
-                        <div id="AMatrix" class="w-100"></div>
+    <div class="row m-0 p-0">
+        <div class="col-md-6 p-0 overflow-hidden" onclick="window.location.href = './eqSystem.html'">
+            <div id="eqSysCont" class="imgCont d-flex justify-content-center align-items-center" style="background-image: url(./images/eqSys.jpg);">
+                <div class="w-100 d-flex justify-content-center align-items-center flex-column position-relative">
+                    <div id="eqImg" class="d-flex justify-content-center align-items-center position-absolute" style="bottom: -100px; width: 200px; height: 200px; overflow: hidden; border-radius: 100%; border: 5px solid var(--info); box-shadow: 0 0 20px 5px black; transition: 0.5s ease-in-out;">
+                        <img src="./images/eqSys2.jpg" class="h-100 my-3">
                     </div>
-                </div>
-                <div class="col-md-1">
-                    <div class="h-100 d-flex flex-column justify-content-between" id="variables"></div>
-                </div>
-                <div class="col-md-2">
-                    <div class="h-100 d-flex justify-content-start align-items-center">
-                        <p class="m-0">b=</p>
-                        <div id="bVector" class="w-100 h-100 px-3 py-2 d-flex flex-column justify-content-between"></div>
-                    </div>
+                    <h4 id="eqTitle" class="text-center my-3 position-absolute" style="top: -100px; color:rgba(255,255,255,0); text-shadow: 0 0 0 rgba(255,255,255,0); transition: 0.5s ease-in-out;">Sistema de<br> Ecuaciones Lineales</h4>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success w-100">Calcular</button>
         </div>
-    </form>
-
-    <div id="Spinner" class="w-100 mt-3 d-none d-none justify-content-center">
-        <div class="spinner-border text-primary" role="status"></div>
+        <div class="col-md-6 p-0 overflow-hidden" onclick="window.location.href = './curveAdjust.html'">
+            <div id="curvesCont" class="imgCont d-flex justify-content-center align-items-center" style="background-image: url(./images/curvesA.jpg);">
+                <div class="w-100 d-flex justify-content-center align-items-center flex-column position-relative">
+                    <div id="cAImg" class="d-flex justify-content-center align-items-center position-absolute" style="bottom: -100px; width: 200px; height: 200px; overflow: hidden; border-radius: 100%; border: 5px solid var(--orange); box-shadow: 0 0 20px 5px black; transition: 0.5s ease-in-out;">
+                        <img src="./images/curvesA2.jpg" class="h-100 my-3">
+                    </div>
+                    <h4 id="cATitle" class="text-center my-3 position-absolute" style="top: -100px; color:rgba(255,255,255,0); text-shadow: 0 0 0 rgba(255,255,255,0); transition: 0.5s ease-in-out;">Ajuste de <br> Curvas</h4>
+                </div>
+            </div>
+        </div>
     </div>
 
-<!-- <script src="./node_lib/jquery/dist/jquery.min.js"></script>
-<script src="./node_lib/popper.js/dist/umd/popper.min.js"></script>
-<script src="./node_lib/bootstrap/dist/js/bootstrap.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-<script src="eel.js"></script>
 <script>
-    MathJax = {
-        tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        svg: {
-        fontCache: 'global'
-        }
-    };
+
+    $('#eqSysCont').hover(() => {
+        $('#eqSysCont').css({"transform": "scale(1.5)"});
+        $("#eqImg").css({"bottom":"-50px"});
+        $("#eqTitle").css({"top":"50px","color":"rgba(255,255,255,1)","text-shadow":"0 0 10px black"});
+    },() => {
+        $('#eqSysCont').css({"transform": "scale(1)"});
+        $("#eqImg").css({"bottom":"-100px"});
+        $("#eqTitle").css({"top":"-100px","color":"rgba(255,255,255,0)","text-shadow": "0 0 0 rgba(0,0,0,0)"});
+    });
+
+    $('#curvesCont').hover(() => {
+        $('#curvesCont').css({"transform": "scale(1.5)"});
+        $("#cAImg").css({"bottom":"-50px"});
+        $("#cATitle").css({"top":"50px","color":"rgba(255,255,255,1)","text-shadow":"0 0 10px black"});
+    },() => {
+        $('#curvesCont').css({"transform": "scale(1)"});
+        $("#cAImg").css({"bottom":"-100px"});
+        $("#cATitle").css({"top":"-100px","color":"rgba(255,255,255,0)","text-shadow": "0 0 0 rgba(0,0,0,0)"});
+    });
+
 </script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<!-- <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script> -->
-<!-- <script id="MathJax-script" async src="./node_lib/mathjax/es5/tex-mml-chtml.js"></script> -->
-<script src="./js/main.js"></script>
+<script src="eel.js"></script>
 </body>
 </html>
