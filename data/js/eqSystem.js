@@ -40,8 +40,8 @@ function createAMatrix(){
     var bVector = document.querySelector('#bVector');
     bVector.innerHTML = "";
 
-    var A = [[4,2,-2],[1,-3,-1],[3,-1,4]];
-    var b = [[0],[7],[5]];
+    // var A = [[4,2,-2],[1,-3,-1],[3,-1,4]];
+    // var b = [[0],[7],[5]];
 
     // var A = [[2,-1,1],[2,2,2],[-1,-1,2]];
     // var b = [[-1],[4],[-5]];
@@ -65,26 +65,28 @@ function createAMatrix(){
 
         for (let j = 1; j <= cant; j++) {
             document.querySelector(`#row${i}`).innerHTML += `
-                <input type="number" id="a${i}${j}" class="form-control mx-2 inputsMatrix" placeholder="0" value="${A[i - 1][j - 1]}">
+                <input type="number" id="a${i}${j}" class="form-control mx-2 inputsMatrix" placeholder="0">
             `;
         }
 
         if(i === 1){
             xVariables.innerHTML += `
-                <p id="var${i}" class="m-0 mt-3">x_${i}</p>
+                <p id="var${i}" class="m-0 mt-2">$$x_${i}$$</p>
             `;
         }else if(i === cant){
             xVariables.innerHTML += `
-                <p id="var${i}" class="m-0 mb-3">x_${i}</p>
+                <p id="var${i}" class="m-0 mb-3">$$x_${i}$$</p>
             `;
         }else{
             xVariables.innerHTML += `
-                <p id="var${i}" class="m-0">x_${i}</p>
+                <p id="var${i}" class="m-0">$$x_${i}$$</p>
             `;
         }
 
         bVector.innerHTML += `
-            <input type="number" id="b${i}" class="form-control inputsMatrix" placeholder="0" value="${b[i - 1]}">
+            <div class="form-group d-flex flex-row px-3 py-2">
+                <input type="number" id="b${i}" class="form-control py-2 px-3 inputsMatrix" placeholder="0">
+            </div>
         `;
 
     }
@@ -100,6 +102,7 @@ createAMatrix();
 
 $('#cantMA').keyup(() => {
     createAMatrix();
+    MathJax.typeset();
     $("#matrixCont").remove();
     $("#GaussCont").remove();
     $("#JacobiCont").remove();
@@ -225,7 +228,7 @@ function getFromPython(){
 
         var allData = [method, iteraciones, A, b]
 
-        eel.getAll(allData)(function(data){
+        eel.getAllEqs(allData)(function(data){
 
             if($("#matrixCont").html() === undefined){
                 $("body").append(`

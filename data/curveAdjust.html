@@ -18,9 +18,53 @@
         </div>
     </nav>
 
+    <h5 class="display-4 text-center m-0 my-3">Ajuste de Curvas</h5>
+
+    <div class="w-100 d-flex flex-row justify-content-center align-items-center">
+      <p class="m-0 px-3">Número de Datos:</p>
+      <input type="number" placeholder="1" class="form-control" id="cantData" style="width: 10%;">
+    </div>
+
+    <form class="container" id="curvesForm">
+      <div class="row">
+        <div class="col-md-6">
+          <h4 class="m-0 text-center">Valores</h4>
+          <div class="w-100 mt-2" id="xyValues">
+            <div class="form-group d-flex align-items-center flex-row px-3 py-2">
+              <div class="input-group mx-2">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text appendsInputsXYMargin">$$x_1$$</span>
+                  </div>
+                  <input type="number" id="x1" class="form-control" placeholder="0" onkeyup="xyVals(1)">
+              </div>
+              <div class="input-group mx-2">
+                  <div class="input-group-prepend">
+                      <span class="input-group-text appendsInputsXYMargin">$$y_1$$</span>
+                  </div>
+                  <input type="number" id="y1" class="form-control" placeholder="0" onkeyup="xyVals(1)">
+              </div>
+              <div class="mx-2">
+                  <p class="m-0 appendsInputsXYMargin" id="xyValsTxt1">$$(0,0)$$</p>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-orange btn-block my-4" id="addValues"><i class="fa fa-plus"></i></button>
+        </div>
+        <div class="col-md-6">
+          <h4 class="m-0 text-center">Gráfica</h4>
+          <div id="dotsGraphic" class="w-100"></div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-info btn-block my-3"><i class="fa fa-send"></i> Calcular</button>
+    </form>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 <script src="eel.js"></script>
+<script src="https://unpkg.com/function-plot/dist/function-plot.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="./js/curveAdjust.js"></script>
 </body>
 </html>

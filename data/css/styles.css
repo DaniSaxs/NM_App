@@ -13,3 +13,19 @@ input::-webkit-inner-spin-button {
   transition: 0.5s ease-in-out;
   cursor: pointer;
 }
+
+.appendsInputsXYMargin>.MathJax.CtxtMenu_Attached_0{
+  margin: 0 !important;
+}
+
+.btn-orange{
+  color: #fff;
+  background-color: var(--orange);
+  border-color: var(--orange);
+}
+
+.btn-orange:hover{
+  background-color: #e46600;
+  border-color: #e46600;
+  color: white;
+}

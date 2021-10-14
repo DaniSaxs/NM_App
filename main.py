@@ -8,7 +8,7 @@ sys.path.append("..")
 eel.init("data")
 
 @eel.expose
-def getAll(data):
+def getAllEqs(data):
 
     method = data[0]
     itera = data[1]
@@ -264,11 +264,19 @@ def Jacobi(itera,A,b,D,L,U,solve):
 
     return elements
 
+@eel.expose
+def getAllCurves(data):
+
+    print(data)
+
+    return "Yeah!"
+
+
+eel.start("index.html", size=(400,400))
+
 # c = np.array([[0,0.5,-0.5],[0,-0.5,-0.5],[0,0,-0.5]])
 # c = np.array([[0,-0.5,0.5],[0.33333333,0,-0.33333333],[-0.75,0.25,0]])
 
 # print(np.linalg.inv(c))
 # print(np.linalg.solve(A,b))
 # print(np.linalg.eigvals(c))
-
-eel.start("index.html", size=(400,400))
