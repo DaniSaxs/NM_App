@@ -379,4 +379,10 @@ def exponential(data):
     
     return [a,b]
 
-eel.start("index.html", size=(400,400))
+def close_callback(route, websockets):
+    if not websockets:
+        print('\x1b[1;37;41m' + 'Connection lost from {0}'.format(route) + '\x1b[0m')
+
+port = int(8080)
+
+eel.start("index.html", mode='chrome-app', port=port, close_callback = close_callback, app = print('\x1b[1;37;42m' + "App Running on port {0}!".format(port) + '\x1b[0m'))

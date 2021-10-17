@@ -75,6 +75,14 @@ $('#addValues').click(() => {
     $("#errorMessage").remove();
 });
 
+function inputsVectorsValidation(){
+    if($(`.inputsVectors`).val() != ""){
+        $(`#eraseMatrix`).removeClass("d-none");
+    }else{
+        $(`#eraseMatrix`).addClass("d-none");
+    }
+}
+
 function xyVals(i){
 
     var xVal = 0;
@@ -183,14 +191,6 @@ $('#randomButton').click(() => {
     // allDotsAnno = [{x:0,text:'x1 = 0'},{y:0,text:'y1 = 0'}];
 });
 
-function inputsVectorsValidation(){
-    if($(`.inputsVectors`).val() != ""){
-        $(`#eraseMatrix`).removeClass("d-none");
-    }else{
-        $(`#eraseMatrix`).addClass("d-none");
-    }
-}
-
 inputsVectorsValidation();
 
 $('#eraseMatrix').click(() => {
@@ -201,7 +201,7 @@ $('#eraseMatrix').click(() => {
     }
     $("#polyCont").remove();
     $("#errorMessage").remove();
-    inputsMatrixValidation();
+    inputsVectorsValidation();
     // allDotsAnno = [{x:0,text:'x1 = 0'},{y:0,text:'y1 = 0'}];
 });
 
