@@ -4,17 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="Description" content="Enter your description here"/>
+<link rel="icon" type="image/vnd.microsoft.icon" href="./images/favicon.ico">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
 <link rel="stylesheet" href="./css/styles.css">
+<style>
+    body {
+        font-family: 'Poppins', sans-serif !important;
+    }
+</style>
 <title>NuMe</title>
 </head>
 <body>
 
+    <div class="preloader flex-column">
+        <div class="spinner-border text-primary" role="status" style="width: 10rem; height: 10rem; font-size: 0.5em !important;">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="position-absolute d-flex justify-content-center align-items-center" style="border: 5px solid #121417; overflow: hidden; width: 150px; height: 150px; background: white; border-radius: 100%;">
+            <img src="./images/favicon.ico" style="width: 70%; filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));">
+        </div>
+        <div class="position-absolute" style="top: 10px; right: 0;">
+            <small class="m-3 mb-0 text-white">©DaTaJuJu - 2021</small>
+        </div>
+    </div>
+
     <div class="position-absolute w-100" style="top: 3%; z-index: 1;">
         <div class="w-100 d-flex justify-content-center align-items-center flex-column">
-            <h1 class="display-5 text-white" style="text-shadow: 0 0 10px black;"><i class="fa fa-subscript"></i> NuMe</h1>
+            <div class="w-100 d-flex flex-row justify-content-center">
+                <div class="d-flex justify-content-center align-items-center mx-3" style="border: 3px solid var(--primary); overflow: hidden; width: 50px; height: 50px; background: white; border-radius: 100%; box-shadow: 0 0 10px 1px rgba(0,0,0,0.5);">
+                    <img src="./images/favicon.ico" style="width: 70%; filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));">
+                </div>
+                <h1 class="display-5 text-white" style="text-shadow: 0 0 10px black;">NuMe</h1>
+            </div>
             <p class="m-0 text-white" style="text-shadow: 0 0 10px black;">Solución de Métodos Numéricos</p>
         </div>
     </div>
@@ -43,10 +66,14 @@
     </div>
 
 <script src="eel.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 <script>
+
+    $(window).on('load', function(){
+        $('.preloader').fadeOut(500);
+    });
 
     $('#eqSysCont').hover(() => {
         $('#eqSysCont').css({"transform": "scale(1.5)"});

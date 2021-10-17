@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="Description" content="Enter your description here"/>
+<link rel="icon" type="image/vnd.microsoft.icon" href="./images/favicon.ico">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="./css/styles.css">
@@ -12,9 +12,26 @@
 </head>
 <body>
 
+    <div class="preloader flex-column">
+        <div class="spinner-border text-primary" role="status" style="width: 10rem; height: 10rem; font-size: 0.5em !important;">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="position-absolute d-flex justify-content-center align-items-center" style="border: 5px solid #121417; overflow: hidden; width: 150px; height: 150px; background: white; border-radius: 100%;">
+            <img src="./images/favicon.ico" style="width: 70%; filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));">
+        </div>
+        <div class="position-absolute" style="top: 10px; right: 0;">
+            <small class="m-3 mb-0 text-white">©DaTaJuJu - 2021</small>
+        </div>
+    </div>
+
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--orange);">
         <div class="container-fluid justify-content-center">
-          <a class="navbar-brand" href="./index.html" title="Regresar al menú principal"><i class="fa fa-subscript"></i> NuMe</a>
+          <div class="w-100 d-flex flex-row justify-content-center align-items-center my-2" title="Regresar al menú principal" onclick="window.location.href = './index.html'">
+            <div class="d-flex justify-content-center align-items-center mx-3" style="overflow: hidden; width: 40px; height: 40px; background: white; border-radius: 100%; box-shadow: 0 0 10px 1px rgba(0,0,0,0.5); cursor: pointer;">
+                <img src="./images/favicon.ico" style="width: 70%; filter: drop-shadow(0 0 3px rgba(0,0,0,0.5));">
+            </div>
+            <h5 class="display-5 text-white m-0" style="text-shadow: 0 0 10px black; cursor: pointer;">NuMe</h5>
+          </div>
         </div>
     </nav>
 

@@ -1,3 +1,7 @@
+$(window).on('load', function(){
+    $('.preloader').fadeOut(500);
+});
+
 var cant = 1;
 var allDots = [[0,0]];
 // var allDotsAnno = [{x:0,text:'x1 = 0'},{y:0,text:'y1 = 0'}];

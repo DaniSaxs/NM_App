@@ -1,3 +1,7 @@
+$(window).on('load', function(){
+    $('.preloader').fadeOut(500);
+});
+
 var method = 0;
 
 var cant = 0;
