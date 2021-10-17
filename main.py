@@ -1,6 +1,7 @@
 import numpy as np
 import eel
 import sys
+import math
 # from numpy import matrix
 # from scipy import linalg
 
@@ -264,13 +265,121 @@ def Jacobi(itera,A,b,D,L,U,solve):
 
     return elements
 
+# Ajuste de Curvas
+
 @eel.expose
 def getAllCurves(data):
 
-    print(data)
+    grade2List = []
 
-    return "Yeah!"
+    try:
+        grade2List = grade2(data)
+    except:
+        grade2List = ["Error"]
 
+    try:
+        listAll = [dataInfo(data),grade1(data),grade2List,exponential(data)]
+    except:
+        listAll = ["Error!"]
+    
+    return listAll
+
+
+# XY = [[4,102.56],[4.2,113.18],[4.5,130.11],[4.7,142.05],[5.1,167.53],[5.5,195.14],[5.9,224.87],[6.3,256.73],[6.8,299.5],[7.1,326.72]]
+
+def dataInfo(XY):
+
+    elements = []
+
+    x_i = []
+    y_i = []
+    x_i_2 = []
+    x_iy_i = []
+    x_i_3 = []
+    x_i_4 = []
+    x_i_2y_i = []
+    lny_i = []
+    x_ilny_i = []
+
+    for i in range(len(XY)):
+        x_i.append(XY[i][0])
+        y_i.append(XY[i][1])
+        x_i_2.append(XY[i][0]**2)
+        x_iy_i.append(XY[i][0]*XY[i][1])
+        x_i_3.append(XY[i][0]**3)
+        x_i_4.append(XY[i][0]**4)
+        x_i_2y_i.append((XY[i][0]**2)*XY[i][1])
+        lny_i.append(math.log(XY[i][1]))
+        x_ilny_i.append(XY[i][0]*math.log(XY[i][1]))
+
+    elements = [XY]
+
+    elements.append([x_i,y_i,x_i_2,x_iy_i,x_i_3,x_i_4,x_i_2y_i,lny_i,x_ilny_i])
+
+    Sumx_i = 0
+    Sumy_i = 0
+    Sumx_i_2 = 0
+    Sumx_iy_i = 0
+    Sumx_i_3 = 0
+    Sumx_i_4 = 0
+    Sumx_i_2y_i = 0
+    Sumlny_i = 0
+    Sumx_ilny_i = 0
+
+    for i in range(len(XY)):
+        Sumx_i += x_i[i]
+        Sumy_i += y_i[i]
+        Sumx_i_2 += x_i_2[i]
+        Sumx_iy_i += x_iy_i[i]
+        Sumx_i_3 += x_i_3[i]
+        Sumx_i_4 += x_i_4[i]
+        Sumx_i_2y_i += x_i_2y_i[i]
+        Sumlny_i += lny_i[i]
+        Sumx_ilny_i += x_ilny_i[i]
+
+    elements.append([Sumx_i,Sumy_i,Sumx_i_2,Sumx_iy_i,Sumx_i_3,Sumx_i_4,Sumx_i_2y_i,Sumlny_i,Sumx_ilny_i])
+
+    return elements
+
+def grade1(data):
+
+    n = len(dataInfo(data)[0])
+
+    m = ((n*dataInfo(data)[2][3])-(dataInfo(data)[2][1]*dataInfo(data)[2][0]))/((n*dataInfo(data)[2][2])-(dataInfo(data)[2][0]**2))
+    b = ((dataInfo(data)[2][2]*dataInfo(data)[2][1])-(dataInfo(data)[2][0]*dataInfo(data)[2][3]))/((n*dataInfo(data)[2][2])-(dataInfo(data)[2][0]**2))
+    
+    return [m,b]
+
+def grade2(data):
+
+    n = len(dataInfo(data)[0])
+
+    A = []
+    b = []
+    # Ecuacion 1
+    A.append([n,dataInfo(data)[2][0],dataInfo(data)[2][2]])
+    b.append([dataInfo(data)[2][1]])
+    # Ecuacion 2
+    A.append([dataInfo(data)[2][0],dataInfo(data)[2][2],dataInfo(data)[2][4]])
+    b.append([dataInfo(data)[2][3]])
+    # Ecuacion 3
+    A.append([dataInfo(data)[2][2],dataInfo(data)[2][4],dataInfo(data)[2][5]])
+    b.append([dataInfo(data)[2][6]])
+    
+    solveEqSys = np.linalg.solve(A,b)
+
+    return solveEqSys.tolist()
+
+def exponential(data):
+
+    n = len(dataInfo(data)[0])
+
+    b = ((n*dataInfo(data)[2][8])-(dataInfo(data)[2][7]*dataInfo(data)[2][0]))/((n*dataInfo(data)[2][2])-(dataInfo(data)[2][0]**2))
+    lna = ((dataInfo(data)[2][2]*dataInfo(data)[2][7])-(dataInfo(data)[2][0]*dataInfo(data)[2][8]))/((n*dataInfo(data)[2][2])-(dataInfo(data)[2][0]**2))
+
+    a = math.exp(lna)
+    
+    return [a,b]
 
 eel.start("index.html", size=(400,400))
 

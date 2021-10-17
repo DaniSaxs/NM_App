@@ -53,6 +53,10 @@ function createAMatrix(){
         cant = 1;
         $('#cantMA').val("1");
         $('#cantMATxt').html("1");
+    }else if(parseInt($('#cantMA').val()) > 50){
+        cant = 50;
+        $('#cantMA').val("50");
+        $('#cantMATxt').html("50");
     }else{
         $('#cantMATxt').html($('#cantMA').val())
         cant = parseInt($('#cantMA').val());
@@ -65,21 +69,21 @@ function createAMatrix(){
 
         for (let j = 1; j <= cant; j++) {
             document.querySelector(`#row${i}`).innerHTML += `
-                <input type="number" id="a${i}${j}" class="form-control mx-2 inputsMatrix" placeholder="0">
+                <input type="number" id="a${i}${j}" style="min-width:10%" class="form-control mx-2 inputsMatrix" placeholder="0">
             `;
         }
 
         if(i === 1){
             xVariables.innerHTML += `
-                <p id="var${i}" class="m-0 mt-2">$$x_${i}$$</p>
+                <p id="var${i}" class="m-0 mt-2">$$x_{${i}}$$</p>
             `;
         }else if(i === cant){
             xVariables.innerHTML += `
-                <p id="var${i}" class="m-0 mb-3">$$x_${i}$$</p>
+                <p id="var${i}" class="m-0 mb-3">$$x_{${i}}$$</p>
             `;
         }else{
             xVariables.innerHTML += `
-                <p id="var${i}" class="m-0">$$x_${i}$$</p>
+                <p id="var${i}" class="m-0">$$x_{${i}}$$</p>
             `;
         }
 
@@ -95,6 +99,7 @@ function createAMatrix(){
 
 $('#matrixForm').submit(e => {
     e.preventDefault();
+    $("#Spinner").removeClass("d-none");
     getFromPython();
 });
 
@@ -103,6 +108,7 @@ createAMatrix();
 $('#cantMA').keyup(() => {
     createAMatrix();
     MathJax.typeset();
+    $(`#eraseMatrix`).addClass("d-none");
     $("#matrixCont").remove();
     $("#GaussCont").remove();
     $("#JacobiCont").remove();
@@ -130,6 +136,10 @@ $('#eraseMatrix').click(() => {
         }
         $(`#b${i}`).val("");
     }
+    $("#matrixCont").remove();
+    $("#GaussCont").remove();
+    $("#JacobiCont").remove();
+    $('#errorMsg').remove();
     inputsMatrixValidation();
 });
 
@@ -172,21 +182,20 @@ function getFromPython(){
         for (let j = 1; j <= cant; j++) {
             if($(`#a${i}${j}`).val() === "" || $(`#b${i}`).val() === ""){
                 $("#Spinner").addClass("d-none");
-                $("#Spinner").removeClass("d-flex");
-                $("body").append(`
-                    <div id="errorMsg" class="w-100 mt-3 d-flex justify-content-center">
-                        <h3 class="text-danger display-6">Matriz Incompleta!</h3>
-                    </div>
-                `);
+                if($('#errorMsg').html() === undefined){
+                    $("body").append(`
+                        <div id="errorMsg" class="w-100 mt-3 d-flex justify-content-center">
+                            <h3 class="text-danger display-4">Matriz Incompleta!</h3>
+                        </div>
+                    `);
+                }
+                $("body, html").animate({scrollTop: $(document).height()}, 500, "swing");
                 return false;
             }else{
                 $('#errorMsg').remove();
             }
         }
     }
-
-    $("#Spinner").removeClass("d-none");
-    $("#Spinner").addClass("d-flex");
 
     A = [];
     var a = [];
@@ -201,7 +210,7 @@ function getFromPython(){
         }
         A.push(a);
 
-        x.push([document.querySelector(`#var${i}`).innerHTML]);
+        x.push([`x_{${i}}`]);
 
         b.push([parseFloat(document.querySelector(`#b${i}`).value)]);
 
@@ -212,15 +221,15 @@ function getFromPython(){
     iteraciones = parseInt($('#iter').val());
 
     if(method === 0 || iteraciones <= 0){
+        $("#Spinner").addClass("d-none");
         if($('#errorMsg').html() === undefined){
             $("body").append(`
                 <div id="errorMsg" class="w-100 mt-3 d-flex justify-content-center">
-                    <h3 class="text-danger display-6">Cantidad o método inválido!</h3>
+                    <h3 class="text-danger display-4">Cantidad o método inválido!</h3>
                 </div>
             `);
         }
-        $("#Spinner").addClass("d-none");
-        $("#Spinner").removeClass("d-flex");
+        $("body, html").animate({scrollTop: $(document).height()}, 500, "swing");
         return false;
     }else{
 
@@ -234,15 +243,19 @@ function getFromPython(){
                 $("body").append(`
                     <div class="w-100" id="matrixCont">
                         <div class="container mt-3">
-                            <div class="d-flex flex-row justify-content-center">
-                                <p class="m-0" id="AMatrixM"></p>
-                                <p class="m-0" id="XVectorM"></p>
-                                <p class="m-0" id="bVectorM"></p>
+                            <div class="w-100 d-flex justify-content-center">
+                                <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                                    <p class="m-0" id="AMatrixM"></p>
+                                    <p class="m-0" id="XVectorM"></p>
+                                    <p class="m-0" id="bVectorM"></p>
+                                </div>
                             </div>
-                            <div class="d-flex flex-row justify-content-center">
-                                <p class="m-0 mx-3" id="DMatrixM"></p>
-                                <p class="m-0 mx-3" id="LMatrixM"></p>
-                                <p class="m-0 mx-3" id="UMatrixM"></p>
+                            <div class="w-100 d-flex justify-content-center">
+                                <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                                    <p class="m-0 mx-3" id="DMatrixM"></p>
+                                    <p class="m-0 mx-3" id="LMatrixM"></p>
+                                    <p class="m-0 mx-3" id="UMatrixM"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -378,7 +391,11 @@ function getFromPython(){
                 <div class="row w-100 mt-3">
                     <div class="col-md-8 d-flex flex-column align-items-center">
                         <p class="m-0" id="X_iMatrixMTitle"></p>
-                        <p class="m-0" id="X_iMatrixM"></p>
+                        <div class="w-100 px-5 d-flex justify-content-center">
+                            <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                                <p class="m-0" id="X_iMatrixM"></p>
+                            </div>
+                        </div>
                         <p class="m-0" id="realValuesTitle"></p>
                         <p class="m-0" id="realValues"></p>
                         <p class="m-0 mb-3" id="realError"></p>
@@ -404,6 +421,9 @@ function getFromPython(){
                 Gauss_Seidel(data[2],realVM,xAndconAnaHTML);
             }
 
+            $("#Spinner").addClass("d-none");
+            $("body, html").animate({scrollTop: $("#AMatrix").height()}, 500, "swing");
+
         });
         
     }
@@ -417,17 +437,25 @@ function Gauss_Seidel(data,realV,xAndconAnaHTML){
             <div class="w-100" id="GaussCont">
             
                 <div class="container mt-3">
-                    <div class="d-flex justify-content-center">
-                        <p class="m-0" id="D_LMatrixM"></p>
+                    <div class="w-100 d-flex justify-content-center">
+                        <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                            <p class="m-0" id="D_LMatrixM"></p>
+                        </div>
                     </div>
-                    <div class="mt-2 d-flex justify-content-center">
-                        <p class="m-0" id="D_L_1MatrixM"></p>
+                    <div class="w-100 mt-2 d-flex justify-content-center">
+                        <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                            <p class="m-0" id="D_L_1MatrixM"></p>
+                        </div>
                     </div>
-                    <div class="mt-2 d-flex justify-content-center">
-                        <p class="m-0" id="T_GSMatrixM"></p>
+                    <div class="w-100 mt-2 d-flex justify-content-center">
+                        <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                            <p class="m-0" id="T_GSMatrixM"></p>
+                        </div>
                     </div>
-                    <div class="mt-2 d-flex justify-content-center">
-                        <p class="m-0" id="C_GSVectorM"></p>
+                    <div class="w-100 mt-2 d-flex justify-content-center">
+                        <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                            <p class="m-0" id="C_GSVectorM"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -522,17 +550,25 @@ function Jacobi(data,realV,xAndconAnaHTML){
             <div class="w-100" id="JacobiCont">
                     
                 <div class="container w-100 mt-3">
-                    <div class="d-flex justify-content-center">
-                        <p class="m-0" id="D_1MatrixM"></p>
+                    <div class="w-100 d-flex justify-content-center">
+                        <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                            <p class="m-0" id="D_1MatrixM"></p>
+                        </div>
                     </div>
-                    <div class="mt-2 d-flex justify-content-center">
-                        <p class="m-0" id="LPUMatrixM"></p>
+                    <div class="w-100 d-flex justify-content-center">
+                        <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                            <p class="m-0" id="LPUMatrixM"></p>
+                        </div>
                     </div>
-                    <div class="mt-2 d-flex justify-content-center">
-                        <p class="m-0" id="T_JMatrixM"></p>
+                    <div class="w-100 d-flex justify-content-center">
+                        <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                            <p class="m-0" id="T_JMatrixM"></p>
+                        </div>
                     </div>
-                    <div class="mt-2 d-flex justify-content-center">
-                        <p class="m-0" id="C_JVectorM"></p>
+                    <div class="w-100 d-flex justify-content-center">
+                        <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                            <p class="m-0" id="C_JVectorM"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -625,7 +661,7 @@ function xAndconvergenceAnalysis(realV,data){
     // X_i Matriz
 
     $('#X_iMatrixMTitle').html(`$$ \\textbf{Tabla de Iteraciones} $$`);
-
+    
     var X_iMatrixM = document.getElementById("X_iMatrixM");
     X_iMatrixM.innerHTML = `$$ \\begin{array}{ c `;
 
@@ -813,8 +849,5 @@ function xAndconvergenceAnalysis(realV,data){
     }
 
     $('#REResult').html(`$$\\textit{$${eigenV2[index]}$ ${signRE} 1, }\\textit{${RERes}}$$`);
-
-    $("#Spinner").addClass("d-none");
-    $("#Spinner").removeClass("d-flex");
 
 }

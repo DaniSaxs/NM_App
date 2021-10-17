@@ -23,6 +23,10 @@
     <div class="w-100 d-flex flex-row justify-content-center align-items-center">
       <p class="m-0 px-3">Número de Datos:</p>
       <input type="number" placeholder="1" class="form-control" id="cantData" style="width: 10%;">
+      <div class="d-flex flex-row">
+        <button id="randomButton" class="btn btn-info mx-2" title="Llenar de números aleatorios todos los Vectores"><i class="fa fa-random"></i></button>
+        <button id="eraseMatrix" class="btn btn-danger d-none mx-2" title="Borrar los campos de todos los Vectores"><i class="fa fa-eraser"></i></button>
+      </div>
     </div>
 
     <form class="container" id="curvesForm">
@@ -30,39 +34,29 @@
         <div class="col-md-6">
           <h4 class="m-0 text-center">Valores</h4>
           <div class="w-100 mt-2" id="xyValues">
-            <div class="form-group d-flex align-items-center flex-row px-3 py-2">
-              <div class="input-group mx-2">
-                  <div class="input-group-prepend">
-                      <span class="input-group-text appendsInputsXYMargin">$$x_1$$</span>
-                  </div>
-                  <input type="number" id="x1" class="form-control" placeholder="0" onkeyup="xyVals(1)">
-              </div>
-              <div class="input-group mx-2">
-                  <div class="input-group-prepend">
-                      <span class="input-group-text appendsInputsXYMargin">$$y_1$$</span>
-                  </div>
-                  <input type="number" id="y1" class="form-control" placeholder="0" onkeyup="xyVals(1)">
-              </div>
-              <div class="mx-2">
-                  <p class="m-0 appendsInputsXYMargin" id="xyValsTxt1">$$(0,0)$$</p>
-              </div>
-            </div>
+            
           </div>
           <button type="button" class="btn btn-orange btn-block my-4" id="addValues"><i class="fa fa-plus"></i></button>
         </div>
         <div class="col-md-6">
-          <h4 class="m-0 text-center">Gráfica</h4>
-          <div id="dotsGraphic" class="w-100"></div>
+          <div class="w-100 h-100 d-flex flex-column justify-content-end pb-4">
+            <h4 class="m-0 text-center">Gráfica</h4>
+            <div id="dotsGraphic" class="w-100"></div>
+          </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-info btn-block my-3"><i class="fa fa-send"></i> Calcular</button>
+      <div class="w-100 d-flex flex-row align-items-center my-3">
+        <button type="submit" class="btn btn-info btn-block"><i class="fa fa-subscript"></i> Calcular</button>
+        <div id="Spinner" class="mx-3 d-none">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+      </div>
     </form>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="eel.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-<script src="eel.js"></script>
 <script src="https://unpkg.com/function-plot/dist/function-plot.js"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="./js/curveAdjust.js"></script>
