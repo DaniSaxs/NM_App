@@ -1,16 +1,9 @@
-// $(document).ready(function() {
-//     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
-//     $('[data-toggle="tooltip"]').on('shown.bs.tooltip', function () {
-//         MathJax.typeset();
-//     });
-// });
-
 var cant = 1;
 var allDots = [[0,0]];
 // var allDotsAnno = [{x:0,text:'x1 = 0'},{y:0,text:'y1 = 0'}];
 var xyValues = $('#xyValues');
 
-var XY = [[4,102.56],[4.2,113.18],[4.5,130.11],[4.7,142.05],[5.1,167.53],[5.5,195.14],[5.9,224.87],[6.3,256.73],[6.8,299.5],[7.1,326.72]]
+// var XY = [[4,102.56],[4.2,113.18],[4.5,130.11],[4.7,142.05],[5.1,167.53],[5.5,195.14],[5.9,224.87],[6.3,256.73],[6.8,299.5],[7.1,326.72]]
 
 function createValues(val){
     xyValues.append(`

@@ -2,8 +2,6 @@ import numpy as np
 import eel
 import sys
 import math
-# from numpy import matrix
-# from scipy import linalg
 
 sys.path.append("..")
 eel.init("data")
@@ -382,10 +380,3 @@ def exponential(data):
     return [a,b]
 
 eel.start("index.html", size=(400,400))
-
-# c = np.array([[0,0.5,-0.5],[0,-0.5,-0.5],[0,0,-0.5]])
-# c = np.array([[0,-0.5,0.5],[0.33333333,0,-0.33333333],[-0.75,0.25,0]])
-
-# print(np.linalg.inv(c))
-# print(np.linalg.solve(A,b))
-# print(np.linalg.eigvals(c))
