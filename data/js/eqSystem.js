@@ -849,7 +849,7 @@ function xAndconvergenceAnalysis(realV,data){
     if(eigenMax < 1){
         RERes = "Converge";
     }else{
-        RERes = "Convergencia Indeterminada";
+        RERes = "No Converge";
     }
 
     $('#REResult').html(`$$\\textit{$${eigenV2[index]}$ ${signRE} 1, }\\textit{${RERes}}$$`);

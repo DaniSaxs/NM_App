@@ -233,9 +233,13 @@ function getFromPython(){
 
         $('body').append(`
         <div class="w-100 "id="polyCont">
-            <div class="w-100 d-flex flex-column justify-content-center align-items-center">
+            <div class="container d-flex flex-column justify-content-center align-items-center">
                 <p class="m-0" id="XYTableTitle"></p>
-                <p class="m-0" id="XYTable"></p>
+                <div class="w-100 d-flex justify-content-center">
+                    <div class="d-flex flex-row" style="overflow:auto; overflow-y:hidden;">
+                        <p class="m-0" id="XYTable"></p>
+                    </div>
+                </div>
             </div>
 
             <p class="m-0" id="polyTitle"></p>
@@ -362,9 +366,10 @@ function getFromPython(){
         for (let i = 0; i < cant; i++) {
             XYTable.innerHTML += `${i + 1} & `;
             for (let j = 0; j < 9; j++) {
-                XYTable.innerHTML += `${Math.round(data[0][1][j][i] * 100000) / 100000} & `;
                 if(j === 8){
-                    XYTable.innerHTML += `\\\\`;
+                    XYTable.innerHTML += `${Math.round(data[0][1][j][i] * 100000) / 100000} \\\\`;
+                }else{
+                    XYTable.innerHTML += `${Math.round(data[0][1][j][i] * 100000) / 100000} & `;
                 }
             }
         }
@@ -372,9 +377,10 @@ function getFromPython(){
         XYTable.innerHTML += `\\hline \\sum & `;
 
         for (let i = 0; i < 9; i++) {
-            XYTable.innerHTML += `${Math.round(data[0][2][i] * 100000) / 100000} & `;
             if(i === 8){
-                XYTable.innerHTML += `\\\\`;
+                XYTable.innerHTML += `${Math.round(data[0][2][i] * 100000) / 100000} \\\\`;
+            }else{
+                XYTable.innerHTML += `${Math.round(data[0][2][i] * 100000) / 100000} & `;
             }
         }
 
